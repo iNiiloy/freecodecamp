@@ -44,42 +44,44 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
--- Name: full_joined_table; Type: TABLE; Schema: public; Owner: freecodecamp
+-- Name: cluster; Type: TABLE; Schema: public; Owner: freecodecamp
 --
 
-CREATE TABLE public.full_joined_table (
-    star_id integer,
-    star_shape text,
-    star_type text,
-    star_has_life boolean,
-    star_age_bln integer,
-    star_distance_bln numeric(6,3),
-    star_mass_sl integer,
-    galaxy_id integer,
-    galaxy_shape text,
-    galaxy_type text,
-    galaxy_has_life boolean,
-    galaxy_age_bln integer,
-    galaxy_distance_bln numeric(6,3),
-    galaxy_mass_tln_sl integer,
-    planet_id integer,
-    planet_shape text,
-    planet_type text,
-    planet_has_life boolean,
-    planet_age_bln integer,
-    planet_distance_bln numeric(6,3),
-    planet_mass_er integer,
-    moon_id integer,
-    moon_shape text,
-    moon_type text,
-    moon_has_life boolean,
-    moon_age_bln integer,
-    moon_distance_bln numeric(6,3),
-    moon_mass_mn integer
+CREATE TABLE public.cluster (
+    cluster_id integer NOT NULL,
+    name character varying(30) NOT NULL,
+    shape text NOT NULL,
+    type text NOT NULL,
+    has_life boolean NOT NULL,
+    age_bln integer NOT NULL,
+    diameter_bln numeric(6,3) NOT NULL,
+    mass_tln_sl integer NOT NULL
 );
 
 
-ALTER TABLE public.full_joined_table OWNER TO freecodecamp;
+ALTER TABLE public.cluster OWNER TO freecodecamp;
+
+--
+-- Name: cluster_cluster_id_seq; Type: SEQUENCE; Schema: public; Owner: freecodecamp
+--
+
+CREATE SEQUENCE public.cluster_cluster_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.cluster_cluster_id_seq OWNER TO freecodecamp;
+
+--
+-- Name: cluster_cluster_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: freecodecamp
+--
+
+ALTER SEQUENCE public.cluster_cluster_id_seq OWNED BY public.cluster.cluster_id;
+
 
 --
 -- Name: galaxy; Type: TABLE; Schema: public; Owner: freecodecamp
@@ -87,7 +89,7 @@ ALTER TABLE public.full_joined_table OWNER TO freecodecamp;
 
 CREATE TABLE public.galaxy (
     galaxy_id integer NOT NULL,
-    g_name character varying(30) NOT NULL,
+    name character varying(30) NOT NULL,
     shape text NOT NULL,
     type text NOT NULL,
     has_life boolean NOT NULL,
@@ -127,7 +129,7 @@ ALTER SEQUENCE public.galaxy_galaxy_id_seq OWNED BY public.galaxy.galaxy_id;
 
 CREATE TABLE public.moon (
     moon_id integer NOT NULL,
-    m_name character varying(30) NOT NULL,
+    name character varying(30) NOT NULL,
     shape text NOT NULL,
     type text NOT NULL,
     has_life boolean NOT NULL,
@@ -168,7 +170,7 @@ ALTER SEQUENCE public.moon_moon_id_seq OWNED BY public.moon.moon_id;
 
 CREATE TABLE public.planet (
     planet_id integer NOT NULL,
-    p_name character varying(30) NOT NULL,
+    name character varying(30) NOT NULL,
     shape text NOT NULL,
     type text NOT NULL,
     has_life boolean NOT NULL,
@@ -209,7 +211,7 @@ ALTER SEQUENCE public.planet_planet_id_seq OWNED BY public.planet.planet_id;
 
 CREATE TABLE public.star (
     star_id integer NOT NULL,
-    s_name character varying(30) NOT NULL,
+    name character varying(30) NOT NULL,
     shape text NOT NULL,
     type text NOT NULL,
     has_life boolean NOT NULL,
@@ -245,6 +247,13 @@ ALTER SEQUENCE public.star_star_id_seq OWNED BY public.star.star_id;
 
 
 --
+-- Name: cluster cluster_id; Type: DEFAULT; Schema: public; Owner: freecodecamp
+--
+
+ALTER TABLE ONLY public.cluster ALTER COLUMN cluster_id SET DEFAULT nextval('public.cluster_cluster_id_seq'::regclass);
+
+
+--
 -- Name: galaxy galaxy_id; Type: DEFAULT; Schema: public; Owner: freecodecamp
 --
 
@@ -273,28 +282,12 @@ ALTER TABLE ONLY public.star ALTER COLUMN star_id SET DEFAULT nextval('public.st
 
 
 --
--- Data for Name: full_joined_table; Type: TABLE DATA; Schema: public; Owner: freecodecamp
+-- Data for Name: cluster; Type: TABLE DATA; Schema: public; Owner: freecodecamp
 --
 
-INSERT INTO public.full_joined_table VALUES (1, 'Spherical', 'Yellow Dwarf', true, 5, 0.000, 1, 1, 'Spiral', 'SBc', true, 0, 13.600, 1, 1, 'Spherical', 'Rocky', true, 4, 0.000, 1, 1, 'Spherical', 'Rocky', false, 4, 0.000, 1);
-INSERT INTO public.full_joined_table VALUES (1, 'Spherical', 'Yellow Dwarf', true, 5, 0.000, 1, 1, 'Spiral', 'SBc', true, 0, 13.600, 1, 2, 'Spherical', 'Rocky', false, 4, 0.000, 1, 2, 'Spherical', 'Rocky', false, 4, 0.000, 1);
-INSERT INTO public.full_joined_table VALUES (1, 'Spherical', 'Yellow Dwarf', true, 5, 0.000, 1, 1, 'Spiral', 'SBc', true, 0, 13.600, 1, 3, 'Spherical', 'Rocky', false, 4, 0.000, 1, 3, 'Irregular', 'Rocky', false, 4, 0.000, 1);
-INSERT INTO public.full_joined_table VALUES (1, 'Spherical', 'Yellow Dwarf', true, 5, 0.000, 1, 1, 'Spiral', 'SBc', true, 0, 13.600, 1, 3, 'Spherical', 'Rocky', false, 4, 0.000, 1, 4, 'Irregular', 'Rocky', false, 4, 0.000, 1);
-INSERT INTO public.full_joined_table VALUES (1, 'Spherical', 'Yellow Dwarf', true, 5, 0.000, 1, 1, 'Spiral', 'SBc', true, 0, 13.600, 1, 4, 'Spherical', 'Gaseus', false, 4, 0.000, 95, 5, 'Spherical', 'Icy', false, 4, 0.000, 2);
-INSERT INTO public.full_joined_table VALUES (1, 'Spherical', 'Yellow Dwarf', true, 5, 0.000, 1, 1, 'Spiral', 'SBc', true, 0, 13.600, 1, 4, 'Spherical', 'Gaseus', false, 4, 0.000, 95, 6, 'Spherical', 'Icy', false, 4, 0.000, 1);
-INSERT INTO public.full_joined_table VALUES (1, 'Spherical', 'Yellow Dwarf', true, 5, 0.000, 1, 1, 'Spiral', 'SBc', true, 0, 13.600, 1, 4, 'Spherical', 'Gaseus', false, 4, 0.000, 95, 7, 'Spherical', 'Rocky', false, 4, 0.000, 1);
-INSERT INTO public.full_joined_table VALUES (1, 'Spherical', 'Yellow Dwarf', true, 5, 0.000, 1, 1, 'Spiral', 'SBc', true, 0, 13.600, 1, 4, 'Spherical', 'Gaseus', false, 4, 0.000, 95, 8, 'Spherical', 'Rocky', false, 4, 0.000, 1);
-INSERT INTO public.full_joined_table VALUES (1, 'Spherical', 'Yellow Dwarf', true, 5, 0.000, 1, 1, 'Spiral', 'SBc', true, 0, 13.600, 1, 4, 'Spherical', 'Gaseus', false, 4, 0.000, 95, 9, 'Spherical', 'Rocky', false, 4, 0.000, 1);
-INSERT INTO public.full_joined_table VALUES (1, 'Spherical', 'Yellow Dwarf', true, 5, 0.000, 1, 1, 'Spiral', 'SBc', true, 0, 13.600, 1, 5, 'Spherical', 'Gaseus', false, 4, 0.000, 318, 10, 'Spherical', 'Rocky', false, 4, 0.000, 3);
-INSERT INTO public.full_joined_table VALUES (1, 'Spherical', 'Yellow Dwarf', true, 5, 0.000, 1, 1, 'Spiral', 'SBc', true, 0, 13.600, 1, 5, 'Spherical', 'Gaseus', false, 4, 0.000, 318, 11, 'Spherical', 'Rocky', false, 4, 0.000, 2);
-INSERT INTO public.full_joined_table VALUES (1, 'Spherical', 'Yellow Dwarf', true, 5, 0.000, 1, 1, 'Spiral', 'SBc', true, 0, 13.600, 1, 5, 'Spherical', 'Gaseus', false, 4, 0.000, 318, 12, 'Spherical', 'Rocky', false, 4, 0.000, 2);
-INSERT INTO public.full_joined_table VALUES (1, 'Spherical', 'Yellow Dwarf', true, 5, 0.000, 1, 1, 'Spiral', 'SBc', true, 0, 13.600, 1, 6, 'Spherical', 'Gaseus', false, 4, 0.000, 17, 13, 'Spherical', 'Rocky', false, 4, 0.000, 1);
-INSERT INTO public.full_joined_table VALUES (1, 'Spherical', 'Yellow Dwarf', true, 5, 0.000, 1, 1, 'Spiral', 'SBc', true, 0, 13.600, 1, 7, 'Spherical', 'Gaseus', false, 4, 0.000, 14, 14, 'Spherical', 'Rocky', false, 4, 0.000, 1);
-INSERT INTO public.full_joined_table VALUES (2, 'Spherical', 'Tidal Disruption Event', false, 10, 0.750, 1, 2, 'Elongated Elliptical', 'Starburst', false, 13, 0.012, 2, 8, 'Spherical', 'Watery', false, 4, 0.750, 1, 15, 'Spherical', 'Rocky', false, 4, 0.000, 1);
-INSERT INTO public.full_joined_table VALUES (3, 'Spherical', 'Pulsar', false, 0, 0.012, 2, 3, 'Spiral', 'SA(s)ab', false, 13, 0.012, 1, 9, 'Spherical', 'Saucy', false, 4, 0.750, 1, 16, 'Spherical', 'Rocky', false, 4, 0.000, 1);
-INSERT INTO public.full_joined_table VALUES (4, 'Ellipsoid', 'IIb supernova', false, 0, 0.011, 14, 4, 'Irregular', 'SA(s)ab', false, 13, 0.120, 2, 10, 'Spherical', 'Soda', false, 4, 0.750, 1, 17, 'Spherical', 'Rocky', false, 4, 0.000, 1);
-INSERT INTO public.full_joined_table VALUES (5, 'Elliptical', 'Yellow Hypergiant', false, 0, 0.011, 32, 5, 'Elongated Spiral', 'SA(s)ab', false, 13, 0.120, 1, 11, 'Spherical', 'Juicy', false, 4, 0.750, 1, 18, 'Spherical', 'Rocky', false, 4, 0.000, 1);
-INSERT INTO public.full_joined_table VALUES (6, 'Spherical', 'G-Type', true, 4, 0.000, 11, 6, 'Irregular', 'SA(s)ab', true, 13, 0.500, 3, 12, 'Spherical', 'Pulpy', true, 4, 0.750, 1, 19, 'Spherical', 'Rocky', false, 4, 0.000, 1);
+INSERT INTO public.cluster VALUES (1, 'Virgo', 'Prolate filament', 'Irregular', true, 6, 0.015, 100);
+INSERT INTO public.cluster VALUES (2, 'Fornax', 'Barred Spiral', 'Regular', false, 10, 0.012, 10);
+INSERT INTO public.cluster VALUES (3, 'Hercules', 'Spiral', 'Regular', false, 13, 0.012, 1);
 
 
 --
@@ -332,6 +325,7 @@ INSERT INTO public.moon VALUES (16, 'Sa-Moon', 'Spherical', 'Rocky', false, 4, 0
 INSERT INTO public.moon VALUES (17, 'So-Moon', 'Spherical', 'Rocky', false, 4, 0.000, 1, 10);
 INSERT INTO public.moon VALUES (18, 'J-Moon', 'Spherical', 'Rocky', false, 4, 0.000, 1, 11);
 INSERT INTO public.moon VALUES (19, 'P-moon', 'Spherical', 'Rocky', false, 4, 0.000, 1, 12);
+INSERT INTO public.moon VALUES (20, 'Hyperion', 'Spherical', 'Icy', false, 4, 0.000, 1, 4);
 
 
 --
@@ -365,6 +359,13 @@ INSERT INTO public.star VALUES (6, 'Pulpy-Sun', 'Spherical', 'G-Type', true, 4, 
 
 
 --
+-- Name: cluster_cluster_id_seq; Type: SEQUENCE SET; Schema: public; Owner: freecodecamp
+--
+
+SELECT pg_catalog.setval('public.cluster_cluster_id_seq', 3, true);
+
+
+--
 -- Name: galaxy_galaxy_id_seq; Type: SEQUENCE SET; Schema: public; Owner: freecodecamp
 --
 
@@ -375,7 +376,7 @@ SELECT pg_catalog.setval('public.galaxy_galaxy_id_seq', 6, true);
 -- Name: moon_moon_id_seq; Type: SEQUENCE SET; Schema: public; Owner: freecodecamp
 --
 
-SELECT pg_catalog.setval('public.moon_moon_id_seq', 19, true);
+SELECT pg_catalog.setval('public.moon_moon_id_seq', 20, true);
 
 
 --
@@ -393,11 +394,27 @@ SELECT pg_catalog.setval('public.star_star_id_seq', 6, true);
 
 
 --
+-- Name: cluster cluster_name_key; Type: CONSTRAINT; Schema: public; Owner: freecodecamp
+--
+
+ALTER TABLE ONLY public.cluster
+    ADD CONSTRAINT cluster_name_key UNIQUE (name);
+
+
+--
+-- Name: cluster cluster_pkey; Type: CONSTRAINT; Schema: public; Owner: freecodecamp
+--
+
+ALTER TABLE ONLY public.cluster
+    ADD CONSTRAINT cluster_pkey PRIMARY KEY (cluster_id);
+
+
+--
 -- Name: galaxy galaxy_name_key; Type: CONSTRAINT; Schema: public; Owner: freecodecamp
 --
 
 ALTER TABLE ONLY public.galaxy
-    ADD CONSTRAINT galaxy_name_key UNIQUE (g_name);
+    ADD CONSTRAINT galaxy_name_key UNIQUE (name);
 
 
 --
@@ -413,7 +430,7 @@ ALTER TABLE ONLY public.galaxy
 --
 
 ALTER TABLE ONLY public.moon
-    ADD CONSTRAINT moon_name_key UNIQUE (m_name);
+    ADD CONSTRAINT moon_name_key UNIQUE (name);
 
 
 --
@@ -429,7 +446,7 @@ ALTER TABLE ONLY public.moon
 --
 
 ALTER TABLE ONLY public.planet
-    ADD CONSTRAINT planet_name_key UNIQUE (p_name);
+    ADD CONSTRAINT planet_name_key UNIQUE (name);
 
 
 --
@@ -445,7 +462,7 @@ ALTER TABLE ONLY public.planet
 --
 
 ALTER TABLE ONLY public.star
-    ADD CONSTRAINT star_name_key UNIQUE (s_name);
+    ADD CONSTRAINT star_name_key UNIQUE (name);
 
 
 --
@@ -483,3 +500,4 @@ ALTER TABLE ONLY public.star
 --
 -- PostgreSQL database dump complete
 --
+
